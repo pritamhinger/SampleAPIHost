@@ -28,7 +28,7 @@ namespace APIProvider
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +36,14 @@ namespace APIProvider
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions {
+                Authority = "http://localhost:5000",
+                RequireHttpsMetadata = false,
+
+                ApiName = "api1"
+            });
+
 
             app.UseMvc();
         }

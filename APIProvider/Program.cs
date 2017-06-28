@@ -12,8 +12,10 @@ namespace APIProvider
     {
         public static void Main(string[] args)
         {
+            Console.Title = "Sample API Provider";
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseUrls("http://localhost:5001")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
